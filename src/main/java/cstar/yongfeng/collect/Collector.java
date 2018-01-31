@@ -32,6 +32,8 @@ public class Collector {
 		this.userZip = zip;
 		this.collectType = ct;
 		this.flag = 0;
+		
+		Collecting();
 	}
 	
 	/** To get the list of event stream of userZip. */
@@ -53,7 +55,7 @@ public class Collector {
 		}
 	}
 	
-	public void Collecting(){
+	private void Collecting(){
 		
 		switch(this.collectType){
 		case TotalTime:

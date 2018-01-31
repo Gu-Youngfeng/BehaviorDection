@@ -8,6 +8,8 @@ import cc.kave.commons.model.events.CommandEvent;
 import cc.kave.commons.model.events.IDEEvent;
 import cc.kave.commons.model.events.visualstudio.DebuggerEvent;
 import cc.kave.commons.model.events.visualstudio.DebuggerMode;
+import cc.kave.commons.model.events.visualstudio.SolutionAction;
+import cc.kave.commons.model.events.visualstudio.SolutionEvent;
 import cc.kave.commons.model.events.visualstudio.WindowAction;
 import cc.kave.commons.model.events.visualstudio.WindowEvent;
 
@@ -29,7 +31,7 @@ public class Analyzer {
 		}
 		this.lslsEvents = new ArrayList<ArrayList<IDEEvent>>(ls);
 	}
-	
+		
 	/////////////////////////////////
 	// Common Sences
 	
@@ -436,24 +438,31 @@ public class Analyzer {
 	/**
 	 * <p>Feature 11: To calculate the number of using operation <b>Changing Execution Stream</b>.</p>
 	 * @return Execution changing usage time
-	 * @BUG Not finished yet
 	 */
 	public int getExecutionChanged(){
 		int count = 0;
 		
 		for(int i=0; i<lslsEvents.size(); i++){ // for each stream
 			ArrayList<IDEEvent> lsStream = lslsEvents.get(i);
+			int f1 = 0;
 			for(int j=0; j<lsStream.size(); j++){ // for each event
 				IDEEvent event = lsStream.get(j);
 
 				if(event instanceof CommandEvent){
 					CommandEvent ce = (CommandEvent)event;
-					//TODO: Changing execution stream
-
+					boolean flag1 = ce.getCommandId().contains(":295:Debug.Start");
+					if( flag1 ){
+						f1++;
+					}
 				}else{
 					continue;
 				}	
 				
+			}
+			
+			if( f1 >=2 ){
+				count++;
+				break;
 			}
 		}
 		
@@ -559,10 +568,56 @@ public class Analyzer {
 	
 	/**
 	 * <p>Feature 15: To calculate the number of using operation <b>Performance Observation</b>.</p>
-	 * <p></p>
+	 * <p>Note: Performance Observation CANNOT triggered <b>DebuggerEvent</b>. 
+	 * So we have to search this operation in the <b>whole event stream</b> RATHER THAN in <b>debugging stream</b>.</p>
 	 * @return observe performance time
 	 */
 	public int getPerformance(){
+		int count = 0;
+		
+		for(int i=0; i<lslsEvents.size(); i++){ // for each stream
+			ArrayList<IDEEvent> lsStream = lslsEvents.get(i);
+			int f1 = 0;
+			int f2 = 0;
+			for(int j=0; j<lsStream.size(); j++){ // for each event
+				IDEEvent event = lsStream.get(j);			
+
+				if(event instanceof CommandEvent){
+					CommandEvent ce = (CommandEvent)event;
+					/** press the button of Show Threads in Source*/
+					boolean flag1 = ce.getCommandId().contains("Performance Profiler...") || 
+							ce.getCommandId().contains(":775:Debug.DiagnosticsHub.Launch");
+					if( flag1 ){
+						f1++;
+						break;
+					}
+				}else if(event instanceof SolutionEvent){
+					SolutionEvent se = (SolutionEvent)event;
+					
+					boolean flag2 = se.Target.getIdentifier().contains("Report20180122‐2246.diagsession") && 
+							se.Action == SolutionAction.AddProjectItem;
+					if( flag2 ){
+						f2++;
+						break;
+					}
+				}else{
+					continue;
+				}	
+			}
+			
+			if(f2 >= 1 && f1 >= 1){
+				count++;
+			}
+		}	
+		return count;
+	}
+	
+	/**
+	 * <p>Feature 16: To calculate the number of using operation <b>Performance Observation</b>.</p>
+	 * <p></p>
+	 * @return observe performance time
+	 */
+	public int getSetNextStatement(){
 		int count = 0;
 		
 		for(int i=0; i<lslsEvents.size(); i++){ // for each stream
@@ -573,8 +628,8 @@ public class Analyzer {
 				if(event instanceof CommandEvent){
 					CommandEvent ce = (CommandEvent)event;
 					/** press the button of Show Threads in Source*/
-					boolean flag1 = ce.getCommandId().contains("Performance Profiler...") || 
-							ce.getCommandId().contains(":775:Debug.DiagnosticsHub.Launch");
+					boolean flag1 = ce.getCommandId().contains("Set Next Statement") || 
+							ce.getCommandId().contains(":258:Debug.SetNextStatement");
 					if( flag1 ){
 						count++;
 						break;
