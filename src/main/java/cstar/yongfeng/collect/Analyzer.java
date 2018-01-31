@@ -35,13 +35,13 @@ public class Analyzer {
 	/////////////////////////////////
 	// Common Sences
 	
-	/** To get the stream times of whole event streams.*/
+	/** Feature 17: To get the stream times of whole event streams.*/
 	public int getStreamTimes(){
 		return this.lslsEvents.size();
 	}
 	
 	/** To get time duration between two event.
-	 * @return duration in Long.
+	 * @return duration in million seconds.
 	 * */
 	public long getDurationBy(IDEEvent eventStart, IDEEvent eventEnd){
 		long duration = 0l;
@@ -60,7 +60,7 @@ public class Analyzer {
 	}
 	
 	/**
-	 * <p>To get the debugging duration time of whole event streams.</p>
+	 * <p>Feature 18/19: To get the duration time of whole event streams.</p>
 	 * @return duration time
 	 */
 	public long getStreamDuration(){

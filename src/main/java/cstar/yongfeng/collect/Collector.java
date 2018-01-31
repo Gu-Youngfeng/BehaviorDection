@@ -12,6 +12,12 @@ import cc.kave.commons.model.events.visualstudio.WindowEvent;
 import cc.kave.commons.utils.io.IReadingArchive;
 import cc.kave.commons.utils.io.ReadingArchive;
 
+/**
+ * <p>Class <b>Collector</b> can mining <b>list of event stream</b> from the given developers' zip dataset.
+ * The <b>collect type</b> defines the event type that we will collect. see {@link Collector(String zip, CollectType ct)}
+ * </p> 
+ *
+ */
 public class Collector {
 	/** userZip path */
 	private String userZip;
@@ -23,12 +29,11 @@ public class Collector {
 	private int flag;
 	
 	/**
-	 * Constructing the Collector using <b>userZip</b> and <b>collectType</b>. 
-	 * collectType is an enum type, which includes TotalTime, ActiveTime, DebugTime, etc..
+	 * Initializing the Collector using <b>userZip</b> and <b>collectType</b>.
 	 * @param zip userZip path
-	 * @param ct collect type
+	 * @param ct collect type, which includes TotalTime, WorkTime, DebugTime
 	 */
-	Collector(String zip, CollectType ct){
+	public Collector(String zip, CollectType ct){
 		this.userZip = zip;
 		this.collectType = ct;
 		this.flag = 0;
