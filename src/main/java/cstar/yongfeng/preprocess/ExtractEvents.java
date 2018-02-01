@@ -469,26 +469,26 @@ public class ExtractEvents {
 	private static String processTestRun(TestRunEvent e){
 		String context = "";
 		context += "[abort]:" + e.WasAborted + "\n";
-		if(e.Tests!=null){
-			for(TestCaseResult test: e.Tests){
-				context += test.toString() + "\n";
-			}
-		}else{
-			context += "-- No Test --\n";
-		}
+//		if(e.Tests!=null){
+//			for(TestCaseResult test: e.Tests){
+//				context += test.toString() + "\n";
+//			}
+//		}else{
+//			context += "-- No Test --\n";
+//		}
 		
 		return context + "\n";
 	}
 	
 	private static String processIDEState(IDEStateEvent e){
 		String context = "[lifeCycle]:" + e.IDELifecyclePhase + "\n";
-		if(e.OpenWindows!=null){
-			for(int i=0; i<e.OpenWindows.size(); i++){
-				context += e.OpenWindows.get(i).getIdentifier() + "\n";
-			}
-		}else{
-			context += "-- No Window --\n";
-		}
+//		if(e.OpenWindows!=null){
+//			for(int i=0; i<e.OpenWindows.size(); i++){
+//				context += e.OpenWindows.get(i).getIdentifier() + "\n";
+//			}
+//		}else{
+//			context += "-- No Window --\n";
+//		}
 		
 		return context + "\n";
 	}
@@ -499,13 +499,13 @@ public class ExtractEvents {
 	
 	private static String processVersionControl(VersionControlEvent e){
 		String context = "[solution]:" + e.Solution.getIdentifier() + "\n";
-		if(e.Actions!=null){
-			for(int i=0; i<e.Actions.size(); i++){
-				context += e.Actions.get(i).ExecutedAt + " | " + e.Actions.get(i).ActionType + "\n";
-			}
-		}else{
-			context += "-- No Commit --\n";
-		}
+//		if(e.Actions!=null){
+//			for(int i=0; i<e.Actions.size(); i++){
+//				context += e.Actions.get(i).ExecutedAt + " | " + e.Actions.get(i).ActionType + "\n";
+//			}
+//		}else{
+//			context += "-- No Commit --\n";
+//		}
 		
 		return context + "\n";
 	}
@@ -516,13 +516,13 @@ public class ExtractEvents {
 	
 	private static String processError(ErrorEvent e){
 		String context = "[content]:" + e.Content + "\n";
-		if(e.StackTrace.length > 0){
-			for(int i=0; i<e.StackTrace.length; i++){
-				context += e.StackTrace[i] + "\n";
-			}
-		}else{
-			context += "-- No Stack Trace --\n";
-		}
+//		if(e.StackTrace.length > 0){
+//			for(int i=0; i<e.StackTrace.length; i++){
+//				context += e.StackTrace[i] + "\n";
+//			}
+//		}else{
+//			context += "-- No Stack Trace --\n";
+//		}
 		
 		return context + "\n";
 	}

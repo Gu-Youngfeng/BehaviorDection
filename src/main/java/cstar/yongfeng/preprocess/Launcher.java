@@ -16,7 +16,8 @@ public class Launcher {
 
 		/** STEP 1: Extract event streams from all zip files in EVENT_DATA directory. 
 		 *          Note that: each developers' stream data is stored in "total" directory, eg. 2016-05-09-10.zip.txt.
-		 *          The results are saved in src/main/resources/total/ directory
+		 *          The results are saved in "src/main/resources/total/" directory, after that, 
+		 *          some illegal zip.txts, whose events are less than 2.5k, are moved into "src/main/resources/remove" directory 
 		 * **/
 		ExtractEvents ee1 = new ExtractEvents(EVENT_DATA);
 		ee1.extract();

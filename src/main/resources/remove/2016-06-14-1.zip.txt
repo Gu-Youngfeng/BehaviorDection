@@ -1,24 +1,72 @@
-8
-0
-0
-1
-1
-1
-1
-1
-1
-1
-8
-6
-8
-1
-10
-10
-1
-1
-1
-1
-1
-1
-1
-12
+### IDEStateEvent | 2016-04-21T14:26:42.612887900-07:00
+[lifeCycle]:Startup
+
+### ActivityEvent | 2016-04-21T14:26:42.919094100-07:00
+EMPTY
+
+### ActivityEvent | 2016-04-21T14:26:47.912402900-07:00
+EMPTY
+
+### CommandEvent | 2016-04-21T14:26:48.619906800-07:00
+[command]:VsAction:1:Debug.StartupProjectCombo
+
+### CommandEvent | 2016-04-21T14:26:48.621908600-07:00
+[command]:{9C1B4719-1443-4D96-B264-7CF17809659B}:257:Debug.StartupProjectCombo
+
+### CommandEvent | 2016-04-21T14:26:51.403887800-07:00
+[command]:VsAction:1:Debug.StartupProjectCombo
+
+### CommandEvent | 2016-04-21T14:26:51.405889600-07:00
+[command]:{9C1B4719-1443-4D96-B264-7CF17809659B}:257:Debug.StartupProjectCombo
+
+### CommandEvent | 2016-04-21T14:26:54.619176200-07:00
+[command]:ExtensionManager
+
+### CommandEvent | 2016-04-21T14:27:16.448686-07:00
+[command]:VsAction:1:Debug.StartupProjectCombo
+
+### CommandEvent | 2016-04-21T14:27:16.450688200-07:00
+[command]:{9C1B4719-1443-4D96-B264-7CF17809659B}:257:Debug.StartupProjectCombo
+
+### IDEStateEvent | 2016-04-21T14:28:14.733057300-07:00
+[lifeCycle]:Shutdown
+
+### EditEvent | 2016-06-14T09:26:06.458154900-07:00
+[changeNum]:2, [changeSize]:335
+
+### IDEStateEvent | 2016-06-14T09:27:57.566168200-07:00
+[lifeCycle]:Startup
+
+### CommandEvent | 2016-06-14T09:27:57.680250700-07:00
+[command]:VsAction:1:ArchitectureDesigner.Zoom
+
+### WindowEvent | 2016-06-14T09:27:57.754302500-07:00
+[window]:main Microsoft Visual Studio, [action]:Activate
+
+### WindowEvent | 2016-06-14T09:27:58.034502100-07:00
+[window]:vsWindowTypeOutput Output, [action]:Move
+
+### CommandEvent | 2016-06-14T09:27:59.131958900-07:00
+[command]:VsAction:1:Debug.StartupProjectCombo
+
+### CommandEvent | 2016-06-14T09:27:59.133960700-07:00
+[command]:{9C1B4719-1443-4D96-B264-7CF17809659B}:257:Debug.StartupProjectCombo
+
+### CommandEvent | 2016-06-14T09:28:00.152683500-07:00
+[command]:VsAction:1:Debug.StartupProjectCombo
+
+### CommandEvent | 2016-06-14T09:28:00.153684200-07:00
+[command]:{9C1B4719-1443-4D96-B264-7CF17809659B}:257:Debug.StartupProjectCombo
+
+### CommandEvent | 2016-06-14T09:28:04.176540700-07:00
+[command]:KaVE.VS.FeedbackGenerator.UploadWizard
+
+### CommandEvent | 2016-06-14T09:28:05.224285200-07:00
+[command]:VsAction:1:Debug.StartupProjectCombo
+
+### CommandEvent | 2016-06-14T09:28:05.225284500-07:00
+[command]:{9C1B4719-1443-4D96-B264-7CF17809659B}:257:Debug.StartupProjectCombo
+
+### UserProfileEvent | 2016-06-14T09:29:21.090358600-07:00
+EMPTY
+
