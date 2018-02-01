@@ -10,7 +10,7 @@ import java.util.List;
 public class Launcher {
 
 	/** event root directory */
-	final public static String EVENT_DATA = "C:/MSR18Dataset/Events-170301-2/Events-170301-2/2016-09-28/";
+	final public static String EVENT_DATA = "C:/MSR18Dataset/Events-170301-2/Events-170301-2/";
 
 	public static void main(String[] args) {
 

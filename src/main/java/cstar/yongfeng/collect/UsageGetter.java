@@ -2,12 +2,13 @@ package cstar.yongfeng.collect;
 
 /***
  * <p>Class <b>UsageGetter</b> provides the interface of accessing the metrics in developers' debugging process.
- * The function {@link#getMtric()} will return the metric values of one developer. The 17 metrics are,</p> 
- *<p><b>1. Debugging Common Sense</b> <li> debugTimes, workTime, debugTime </li></p>
- *<p><b>2. Debugging Foundations</b> <li> debugBreakpoint, debugRestart, debugStepIO, debugStepSP, 
- *debugMonitor, debugStepOUT, debugRunCursor, debugAddWatch </li></p>
- *<p><b>3. Debugging Tricks</b> <li> debugEditing, debugBreakCondition, debugExeChanged, debugOutScope, 
- *debugBreakException, debugMultiThread, debugPerformance, debugNextStatement </li></p>
+ * The function {@link#getMtric()} will return the metric values of one developer. The <b>19</b> metrics are,</p> 
+ *
+ * <p><b>1. Debugging Foundations</b> <li> debugBreakpoint, debugRestart, debugStepIO, debugStepSP, 
+ * debugMonitor, debugStepOUT, debugRunCursor, debugAddWatch </li></p>
+ * <p><b>2. Debugging Tricks</b> <li> debugEditing, debugBreakCondition, debugExeChanged, debugOutScope, 
+ * debugBreakException, debugMultiThread, debugPerformance, debugNextStatement </li></p>
+ * <p><b>3. Debugging Common Sense</b> <li> debugTimes, workTime, debugTime </li></p>
  */
 public class UsageGetter {
 	
@@ -94,12 +95,20 @@ public class UsageGetter {
 	}
 	
 	/**
-	 * <p>To return the 17 metrics in developers' debugging process.
-	 * The detial 17 metrics see {@link UsageGetter}</p>
+	 * <p>To return the 19 metrics in developers' debugging process.
+	 * The detial 19 metrics see {@link UsageGetter}</p>
 	 * @return
 	 */
 	public long[] getMetric(){
 		return this.attributes;
+	}
+	
+	/** To show the metric */
+	public void showMetric(){
+		for(long metric: this.attributes){
+			System.out.print(metric + " ");
+		}
+		System.out.println("");
 	}
 
 }

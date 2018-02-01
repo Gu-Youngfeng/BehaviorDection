@@ -19,6 +19,8 @@ import cc.kave.commons.model.events.SystemEvent;
 import cc.kave.commons.model.events.completionevents.CompletionEvent;
 import cc.kave.commons.model.events.testrunevents.TestCaseResult;
 import cc.kave.commons.model.events.testrunevents.TestRunEvent;
+import cc.kave.commons.model.events.userprofiles.Likert7Point;
+import cc.kave.commons.model.events.userprofiles.Positions;
 import cc.kave.commons.model.events.userprofiles.UserProfileEvent;
 import cc.kave.commons.model.events.versioncontrolevents.VersionControlEvent;
 import cc.kave.commons.model.events.visualstudio.BuildEvent;
@@ -248,6 +250,12 @@ public class ExtractEvents {
 		
 	}
 	
+	/***
+	 * <p>To identify the user <b>profile information</b> from the UserProfileEvent.
+	 * Note that one developer might upload message with different user profiles.
+	 * We ONLY identify the legal information of them.
+	 * </p>
+	 */
 	public void identify() {
 
 		/**
@@ -268,15 +276,17 @@ public class ExtractEvents {
 	private void identifyUserZip(String userZip) {
 		// open the .zip file ... 
 		try (IReadingArchive ra = new ReadingArchive(new File(eventsDir, userZip))) {
-			System.out.println("USER:" + userZip); // print each userZip directory
+			System.out.print("USER:" + userZip); // print each userZip directory
 
 			while (ra.hasNext()) {
 
-				IDEEvent e = ra.getNext(IDEEvent.class); // 下一条 IDEEvent 事件
+				IDEEvent e = ra.getNext(IDEEvent.class); // next event in this developer
 
 				if(e != null){
-					readIdentify(e, userZip);
-//					identifyUser(e, userZip);
+					boolean isBreak = readIdentify(e, userZip);
+					if(isBreak){
+						break; // break the loop and go to the next developer
+					}
 				}
 			}
 		}
@@ -286,11 +296,18 @@ public class ExtractEvents {
 		}
 	}
 	
-	private void readIdentify(IDEEvent e, String userZip){
+	private boolean readIdentify(IDEEvent e, String userZip){
+		boolean isBreak = false;
 		if(e instanceof UserProfileEvent){
 			UserProfileEvent ue = (UserProfileEvent) e;
-			System.out.printf("[Position]:%-25s [C#]:%10s\n", ue.Position, ue.ProgrammingCSharp);
+			
+			if(ue.Position != Positions.Unknown || ue.ProgrammingCSharp != Likert7Point.Unknown){ 
+				isBreak = true;
+				System.out.printf(" [Position]:%s [C#]:%s\n", ue.Position, ue.ProgrammingCSharp);
+			}
 		}
+
+		return isBreak;
 	}
 	
 	
