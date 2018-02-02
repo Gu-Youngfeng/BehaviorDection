@@ -1,7 +1,7 @@
 This file shows the user profile of all 80 developers, including Position [Position], and C# skills [C#].
 -------------------------------------------------------------------------------
 EventsDir :C:/MSR18Dataset/Events-170301-2/Events-170301-2/
-USERNumbers:84
+USERNumbers:81
 -------------------------------------------------------------------------------
 
 USER:2016-05-09\1.zip [Position]:ResearcherAcademic [C#]:Positive3
