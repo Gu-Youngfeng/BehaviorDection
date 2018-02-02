@@ -98,7 +98,7 @@ public class UserDivition {
 //			expPath = matcher.group(2).trim(); // user position
 //			expPath = matcher.group(3).trim(); // user CSharp skills
 		}
-		
+		expPath = expPath.replace("\\", "/");
 		return DATASET_PATH + expPath;
 	}
 

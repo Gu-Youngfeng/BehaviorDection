@@ -40,18 +40,23 @@ public class Launcher {
 		/**STEP 2: Analyze the user debugging behaviors. We just print them in the Console Window.
 		 * 
 		 */
-		for(String path: lsPositivePaths){
-			UsageGetter usager = new UsageGetter(path);
-			usager.showMetric();
-		}
-		for(String path: lsNegativePaths){
-			UsageGetter usager = new UsageGetter(path);
-			usager.showMetric();
-		}
-		for(String path: lsNeutralPaths){
-			UsageGetter usager = new UsageGetter(path);
-			usager.showMetric();
-		}
+//		for(String path: lsPositivePaths){
+//			UsageGetter usager = new UsageGetter(path);
+//			usager.showMetric();
+//		}
+//		System.out.println("-------");
+//		for(String path: lsNegativePaths){
+//			UsageGetter usager = new UsageGetter(path);
+//			usager.showMetric();
+//		}
+//		System.out.println("-------");
+//		for(String path: lsNeutralPaths){
+//			UsageGetter usager = new UsageGetter(path);
+//			usager.showMetric();
+//		}
+		
+		UsageGetter usager = new UsageGetter("C:/MSR18Dataset/Events-170301-2/Events-170301-2/2016-05-09/1.zip");
+		usager.showMetric();
 		
 	}
 
