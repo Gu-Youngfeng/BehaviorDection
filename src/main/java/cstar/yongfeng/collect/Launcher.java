@@ -55,8 +55,11 @@ public class Launcher {
 //			usager.showMetric();
 //		}
 		
-		UsageGetter usager = new UsageGetter("C:/MSR18Dataset/Events-170301-2/Events-170301-2/2016-05-09/1.zip");
+		UsageGetter usager = new UsageGetter("C:/MSR18Dataset/Events-170301-2/Events-170301-2/2016-05-10/1.zip");
 		usager.showMetric();
+		
+//		System.out.println("[FREE]: " + Runtime.getRuntime().freeMemory()/(1024*1024));
+//		System.out.println("[TOTA]: " + Runtime.getRuntime().totalMemory()/(1024*1024));
 		
 	}
 

@@ -12,9 +12,9 @@ package cstar.yongfeng.collect;
  */
 public class UsageGetter {
 	
-	private Collector collectorDebugger;
-	
-	private Collector collectorWorkTime;
+//	private Collector collectorDebugger;
+//	
+//	private Collector collectorWorkTime;
 	
 	private Analyzer analyzerDebugger;
 	
@@ -28,9 +28,9 @@ public class UsageGetter {
 	 */
 	public UsageGetter(String path){
 		
-		collectorDebugger = new Collector(path, CollectType.DebugTime);
+		Collector collectorDebugger = new Collector(path, CollectType.DebugTime);
 		
-		collectorWorkTime = new Collector(path, CollectType.WorkTime);
+		Collector collectorWorkTime = new Collector(path, CollectType.WorkTime);
 		
 		analyzerDebugger = new Analyzer(collectorDebugger.getlslsEvent());
 		
@@ -88,10 +88,14 @@ public class UsageGetter {
 		this.attributes = new long[]{debugBreakpoint, debugRestart, debugStepIO, debugStepSP, 
 				debugMonitor, debugStepOUT, debugRunCursor, debugAddWatch,
 				debugEditing, debugBreakCondition, debugExeChanged, debugOutScope, 
-				debugBreakException, debugMultiThread, debugPerformance, debugNextStatement,
+				debugBreakException, debugMultiThread, 
+				debugPerformance, 
+				debugNextStatement,
 				
 				debugTimes, workTime, debugTime
 				};
+		
+		
 	}
 	
 	/**

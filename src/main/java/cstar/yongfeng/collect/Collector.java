@@ -1,12 +1,17 @@
 package cstar.yongfeng.collect;
 
 import java.io.File;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import cc.kave.commons.model.events.IDEEvent;
 import cc.kave.commons.model.events.visualstudio.DebuggerEvent;
 import cc.kave.commons.model.events.visualstudio.DebuggerMode;
+import cc.kave.commons.model.events.visualstudio.IDEStateEvent;
+import cc.kave.commons.model.events.visualstudio.LifecyclePhase;
 import cc.kave.commons.model.events.visualstudio.WindowAction;
 import cc.kave.commons.model.events.visualstudio.WindowEvent;
 import cc.kave.commons.utils.io.IReadingArchive;
@@ -80,7 +85,7 @@ public class Collector {
 	
 	/**
 	 * <p>Mining the list of debugging event stream. 
-	 * Basically, we only mine the evens between these DebuggerEvents, whose actions are <b>Run</b> and <b>Design</b>.</p>
+	 * Basically, we only mine the evens between these <b>[DebuggerEvents]</b>, whose actions are <b>Run</b> and <b>Design</b>.</p>
 	 */
 	private void miningDebug(){
 		
@@ -99,12 +104,12 @@ public class Collector {
 					if(de.Mode == DebuggerMode.Run && de.Reason.equals("dbgEventReasonLaunchProgram")){
 						// Debug starts
 						flag = 1;
-						lsStream.add(de);
+//						lsStream.add(de);
 						
 					}else if(de.Mode == DebuggerMode.Design){
 						// Debug ends
 						flag = 0;
-						lsStream.add(de);
+//						lsStream.add(de);
 						ArrayList<IDEEvent> lsTemp = new ArrayList<IDEEvent>(lsStream); // list copy
 						lslsevents.add(lsTemp); // put the debug stream into lslsevent
 						lsStream.clear(); // clear the debug stream
@@ -129,12 +134,13 @@ public class Collector {
 			e.printStackTrace();
 		}
 		
-		this.lslsEvents = new ArrayList<ArrayList<IDEEvent>>(lslsevents);
+//		this.lslsEvents = new ArrayList<ArrayList<IDEEvent>>(lslsevents);
+		this.lslsEvents = lslsevents;
 	}
 	
 	/**
 	 * <p>Mining the list of working event stream. 
-	 * Basically, we only mine the evens between these WindowEvents, whose actions are <b>Activate</b> and <b>Deactivate</b>.</p>
+	 * TODO: How to detect activity interval 
 	 */
 	private void miningWork(){
 		
@@ -144,38 +150,20 @@ public class Collector {
 			
 			ArrayList<IDEEvent> lsStream = new ArrayList<IDEEvent>(); // each debug stream
 			
+			IDEEvent testE = ra.getNext(IDEEvent.class); // read the first IDEEvent
+			 // get the start time
+			int dateYear = testE.getTriggeredAt().getYear();
+			int dateMonth = testE.getTriggeredAt().getMonthValue();
+			int dateDay = testE.getTriggeredAt().getDayOfMonth();
+			ZoneId zoneID = ZoneId.of("UTC+1");
+//			ZonedDateTime dateStart = new ZonedDateTime(dateYear, dateMonth, dateDay, 3, 0, 0, 0l, zoneID);
+			
 			while (ra.hasNext()) { // read event one by one
 
 				IDEEvent e = ra.getNext(IDEEvent.class); // read the next IDEEvent
-
-				if(e instanceof WindowEvent){ // find WindowEvent
-					WindowEvent we = (WindowEvent) e;
-					if(we.Window.getCaption().contains("Visual Studio") && we.Action == WindowAction.Activate){
-						// Work starts
-						flag = 1;
-						lsStream.add(we);
-						
-					}else if(we.Window.getCaption().contains("Visual Studio") && we.Action == WindowAction.Deactivate){
-						// Work ends
-						flag = 0;
-						lsStream.add(we);
-						ArrayList<IDEEvent> lsTemp = new ArrayList<IDEEvent>(lsStream); // list copy
-						lslsevents.add(lsTemp); // put the active stream into lslsevent
-						lsStream.clear(); // clear the active stream
-					}else{
-						// Working
-						lsStream.add(we);
-					}
-				}else{ // other IDEEvent
-					if(flag == 1){
-						// working continues
-						lsStream.add(e);
-					}
-					else{
-						// out of Visual Studio
-						continue;
-					}
-				}
+				
+				
+				
 			}
 		}
 		catch(Exception e){
@@ -183,7 +171,8 @@ public class Collector {
 			e.printStackTrace();
 		}
 		
-		this.lslsEvents = new ArrayList<ArrayList<IDEEvent>>(lslsevents);
+//		this.lslsEvents = new ArrayList<ArrayList<IDEEvent>>(lslsevents);
+		this.lslsEvents = lslsevents;
 	}
 
 }
