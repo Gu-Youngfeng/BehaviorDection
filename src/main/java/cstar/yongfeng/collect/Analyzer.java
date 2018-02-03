@@ -29,7 +29,8 @@ public class Analyzer {
 			System.out.println("[ERROR]: Developers' list of event stream can not be NULL!");
 			return;
 		}
-		this.lslsEvents = new ArrayList<ArrayList<IDEEvent>>(ls);
+//		this.lslsEvents = new ArrayList<ArrayList<IDEEvent>>(ls);
+		this.lslsEvents = ls;
 	}
 		
 	/////////////////////////////////
@@ -43,14 +44,15 @@ public class Analyzer {
 	/** To get time duration between two event.
 	 * @return duration in million seconds.
 	 * */
-	public long getDurationBy(IDEEvent eventStart, IDEEvent eventEnd){
-		long duration = 0l;
+	public float getDurationBy(IDEEvent eventStart, IDEEvent eventEnd){
+		float duration = 0f;
 		
 		Date dateStart = Date.from(eventStart.getTriggeredAt().toInstant());
 		Date dateEnd = Date.from(eventEnd.getTriggeredAt().toInstant());
+		
 		long longStart = dateStart.getTime();
 		long longEnd = dateEnd.getTime();
-		duration = longEnd - longStart;
+		duration = (longEnd - longStart)*(1.0f)/(1000*60*1.0f);
 		
 //		System.out.println("[start]:" + eventStart.getTriggeredAt().toString() + "[end]:" + eventEnd.getTriggeredAt().toString());
 //		System.out.println("[start]:" + dateStart.getTime() + "[end]:" + dateEnd.getTime());
@@ -63,15 +65,16 @@ public class Analyzer {
 	 * <p>Feature 18/19: To get the duration time of whole event streams.</p>
 	 * @return duration time
 	 */
-	public long getStreamDuration(){
-		long tim = 0l;
+	public float getStreamDuration(){
+		float tim = 0f;
 		
 		for(int i=0; i<lslsEvents.size(); i++){ // for each stream
 			ArrayList<IDEEvent> lsStream = lslsEvents.get(i);
+//			System.out.println("[stream size]:" + lsStream == null?0:lsStream.size());
 			int lenStream = lsStream.size();
 			IDEEvent eventStart = lsStream.get(0);
 			IDEEvent eventEnd = lsStream.get(lenStream-1);
-			long deltTime = getDurationBy(eventStart, eventEnd);
+			float deltTime = getDurationBy(eventStart, eventEnd);
 			tim += deltTime;
 		}
 		return tim;
@@ -421,7 +424,7 @@ public class Analyzer {
 	
 					if( flag1 || flag2){
 						count++;
-						System.out.println("[command]: " + ce.getCommandId());
+//						System.out.println("[command]: " + ce.getCommandId());
 						break;
 					}
 

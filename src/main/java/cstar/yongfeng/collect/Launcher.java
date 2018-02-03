@@ -66,7 +66,6 @@ public class Launcher {
 		DoWorks(userProfile, "Positive"); // to get rid of the risk of memory leak.
 //		DoWorks(userProfile, "Negative");
 //		DoWorks(userProfile, "Neutral");
-		
 	}
 	
 	public static void DoWorks(String userProfile, String prefix){
@@ -76,8 +75,11 @@ public class Launcher {
 //			System.out.println("[userZip]: " +path);
 //		}
 		for(String path: lsPositivePaths){
-			UsageGetter usager = new UsageGetter(path);
+//			UsageGetter usager = new UsageGetter(path, CollectType.DebugTime);
+//			usager.showMetric();
+			UsageGetter usager = new UsageGetter(path, CollectType.WorkTime);
 			usager.showMetric();
+			System.out.println("\n--------");
 			break;
 		}
 	}

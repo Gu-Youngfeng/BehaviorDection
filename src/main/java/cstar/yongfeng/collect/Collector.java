@@ -99,12 +99,12 @@ public class Collector {
 					if(de.Mode == DebuggerMode.Run && de.Reason.equals("dbgEventReasonLaunchProgram")){
 						// Debug starts
 						flag = 1;
-//						lsStream.add(de);
+						lsStream.add(de);
 						
 					}else if(de.Mode == DebuggerMode.Design){
 						// Debug ends
 						flag = 0;
-//						lsStream.add(de);
+						lsStream.add(de);
 						ArrayList<IDEEvent> lsTemp = new ArrayList<IDEEvent>(lsStream); // list copy
 						lslsevents.add(lsTemp); // put the debug stream into lslsevent
 						lsStream.clear(); // clear the debug stream
@@ -151,12 +151,12 @@ public class Collector {
 					if(ide.IDELifecyclePhase == LifecyclePhase.Startup){
 						// Visual Studio starts
 						flag = 1;
-//						lsStream.add(ide);
+						lsStream.add(ide);
 						
 					}else if(ide.IDELifecyclePhase == LifecyclePhase.Shutdown){
 						// Visual Studio ends
 						flag = 0;
-//						lsStream.add(ide);
+						lsStream.add(ide);
 						if(lsStream != null){
 							ArrayList<IDEEvent> lsTemp = new ArrayList<IDEEvent>(lsStream); 
 							lslsevents.add(lsTemp); 
