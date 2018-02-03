@@ -12,7 +12,7 @@ package cstar.yongfeng.collect;
  */
 public class UsageGetter {
 	
-//	private Collector collectorDebugger;
+//	private Collector collectorDebugger; // to get out of the risk of memory leak
 //	
 //	private Collector collectorWorkTime;
 	
@@ -84,6 +84,9 @@ public class UsageGetter {
 		int debugMultiThread = analyzerDebugger.getMultiThread();
 		int debugPerformance = analyzerWorkTime.getPerformance();
 		int debugNextStatement = analyzerDebugger.getSetNextStatement();
+		
+		analyzerDebugger = null; // to get out of the risk of memory leak
+		analyzerWorkTime = null;
 		
 		this.attributes = new long[]{debugBreakpoint, debugRestart, debugStepIO, debugStepSP, 
 				debugMonitor, debugStepOUT, debugRunCursor, debugAddWatch,

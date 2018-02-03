@@ -1,10 +1,7 @@
 package cstar.yongfeng.collect;
 
 import java.io.File;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import cc.kave.commons.model.events.IDEEvent;
@@ -12,8 +9,6 @@ import cc.kave.commons.model.events.visualstudio.DebuggerEvent;
 import cc.kave.commons.model.events.visualstudio.DebuggerMode;
 import cc.kave.commons.model.events.visualstudio.IDEStateEvent;
 import cc.kave.commons.model.events.visualstudio.LifecyclePhase;
-import cc.kave.commons.model.events.visualstudio.WindowAction;
-import cc.kave.commons.model.events.visualstudio.WindowEvent;
 import cc.kave.commons.utils.io.IReadingArchive;
 import cc.kave.commons.utils.io.ReadingArchive;
 
@@ -122,10 +117,6 @@ public class Collector {
 						// debugging continues
 						lsStream.add(e);
 					}
-					else{
-						// debugging is over
-						continue;
-					}
 				}
 			}
 		}
@@ -134,13 +125,13 @@ public class Collector {
 			e.printStackTrace();
 		}
 		
-//		this.lslsEvents = new ArrayList<ArrayList<IDEEvent>>(lslsevents);
 		this.lslsEvents = lslsevents;
 	}
 	
 	/**
-	 * <p>Mining the list of working event stream. 
-	 * TODO: How to detect activity interval 
+	 * <p>Mining the list of working event stream. To simplify the problem, 
+	 * we just use the tag <b>"LifCyclePhase"</b> of <b>[IDEStateEvent]</b> to extract the In-IDE time of developers.
+	 * </p>
 	 */
 	private void miningWork(){
 		
@@ -149,29 +140,50 @@ public class Collector {
 		try (IReadingArchive ra = new ReadingArchive(new File(this.userZip))) { // read from the userZip
 			
 			ArrayList<IDEEvent> lsStream = new ArrayList<IDEEvent>(); // each debug stream
-			
-			IDEEvent testE = ra.getNext(IDEEvent.class); // read the first IDEEvent
-			 // get the start time
-			int dateYear = testE.getTriggeredAt().getYear();
-			int dateMonth = testE.getTriggeredAt().getMonthValue();
-			int dateDay = testE.getTriggeredAt().getDayOfMonth();
-			ZoneId zoneID = ZoneId.of("UTC+1");
-//			ZonedDateTime dateStart = new ZonedDateTime(dateYear, dateMonth, dateDay, 3, 0, 0, 0l, zoneID);
-			
+						
+			/** The first event is the IDEStateEvent **/
 			while (ra.hasNext()) { // read event one by one
 
 				IDEEvent e = ra.getNext(IDEEvent.class); // read the next IDEEvent
 				
+				if(e instanceof IDEStateEvent){ // find IDEStateEvent
+					IDEStateEvent ide = (IDEStateEvent) e;
+					if(ide.IDELifecyclePhase == LifecyclePhase.Startup){
+						// Visual Studio starts
+						flag = 1;
+//						lsStream.add(ide);
+						
+					}else if(ide.IDELifecyclePhase == LifecyclePhase.Shutdown){
+						// Visual Studio ends
+						flag = 0;
+//						lsStream.add(ide);
+						if(lsStream != null){
+							ArrayList<IDEEvent> lsTemp = new ArrayList<IDEEvent>(lsStream); 
+							lslsevents.add(lsTemp); 
+							lsStream.clear(); 
+						}
+					}else{
+						// IDE state events within the Visual Studio
+						lsStream.add(ide);
+					}
+				}else{ // other IDEEvent
+					if(flag == 1){
+						// Other events within the Visual Studio
+						lsStream.add(e);
+					}
+				}
 				
-				
+			}
+			if(lsStream != null){
+				lslsevents.add(lsStream); // the rest event might without the Startup and Shutdown
 			}
 		}
 		catch(Exception e){
 			System.out.println("getNext() function is failed to get the next event!");
 			e.printStackTrace();
+			return;
 		}
 		
-//		this.lslsEvents = new ArrayList<ArrayList<IDEEvent>>(lslsevents);
 		this.lslsEvents = lslsevents;
 	}
 
