@@ -28,13 +28,6 @@ public class UsageGetter {
 	 */
 	public UsageGetter(String path, CollectType type){
 		
-		
-		
-//		Collector collectorWorkTime = new Collector(path, CollectType.WorkTime);
-		
-		
-		
-//		analyzerWorkTime = new Analyzer(collectorWorkTime.getlslsEvent());
 		Collector collectorDebugger = new Collector(path, type);
 		analyzerDebugger = new Analyzer(collectorDebugger.getlslsEvent());
 		

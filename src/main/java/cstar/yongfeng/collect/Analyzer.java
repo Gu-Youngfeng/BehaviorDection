@@ -44,15 +44,15 @@ public class Analyzer {
 	/** To get time duration between two event.
 	 * @return duration in million seconds.
 	 * */
-	public float getDurationBy(IDEEvent eventStart, IDEEvent eventEnd){
-		float duration = 0f;
+	public long getDurationBy(IDEEvent eventStart, IDEEvent eventEnd){
+		long duration = 0l;
 		
 		Date dateStart = Date.from(eventStart.getTriggeredAt().toInstant());
 		Date dateEnd = Date.from(eventEnd.getTriggeredAt().toInstant());
 		
 		long longStart = dateStart.getTime();
 		long longEnd = dateEnd.getTime();
-		duration = (longEnd - longStart)*(1.0f)/(1000*60*1.0f);
+		duration = (longEnd - longStart);
 		
 //		System.out.println("[start]:" + eventStart.getTriggeredAt().toString() + "[end]:" + eventEnd.getTriggeredAt().toString());
 //		System.out.println("[start]:" + dateStart.getTime() + "[end]:" + dateEnd.getTime());
@@ -66,7 +66,7 @@ public class Analyzer {
 	 * @return duration time
 	 */
 	public float getStreamDuration(){
-		float tim = 0f;
+		long tim = 0l;
 		
 		for(int i=0; i<lslsEvents.size(); i++){ // for each stream
 			ArrayList<IDEEvent> lsStream = lslsEvents.get(i);
@@ -74,10 +74,11 @@ public class Analyzer {
 			int lenStream = lsStream.size();
 			IDEEvent eventStart = lsStream.get(0);
 			IDEEvent eventEnd = lsStream.get(lenStream-1);
-			float deltTime = getDurationBy(eventStart, eventEnd);
+			long deltTime = getDurationBy(eventStart, eventEnd);
 			tim += deltTime;
 		}
-		return tim;
+		float sumTime = tim *(1.0f)/(1000*60*1.0f);
+		return sumTime;
 	}
 	
 	/////////////////////////////////
