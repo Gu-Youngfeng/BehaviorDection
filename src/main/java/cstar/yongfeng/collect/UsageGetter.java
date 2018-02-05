@@ -142,7 +142,7 @@ public class UsageGetter {
 //		int debugOutScope = analyzerDebugger.getOutScope();
 //		int debugBreakException = analyzerDebugger.getBreakException();
 //		int debugMultiThread = analyzerDebugger.getMultiThread();
-		int debugPerformance = analyzerDebugger.getPerformance(); // see getTotalUsage()
+//		int debugPerformance = analyzerDebugger.getPerformance(); // see getTotalUsage()
 //		int debugNextStatement = analyzerDebugger.getSetNextStatement();
 		
 		this.attributes = new float[]{
@@ -150,7 +150,7 @@ public class UsageGetter {
 //				debugMonitor, debugStepOUT, debugRunCursor, debugAddWatch,
 //				debugEditing, debugBreakCondition, debugExeChanged, debugOutScope, 
 //				debugBreakException, debugMultiThread, 
-				debugPerformance, 
+//				debugPerformance, 
 //				debugNextStatement,
 //				
 //				debugTimes, 

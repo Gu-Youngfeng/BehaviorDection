@@ -593,7 +593,6 @@ public class Analyzer {
 							ce.getCommandId().contains(":775:Debug.DiagnosticsHub.Launch");
 					if( flag1 ){
 						f1++;
-						break;
 					}
 				}else if(event instanceof SolutionEvent){
 					SolutionEvent se = (SolutionEvent)event;
@@ -602,7 +601,6 @@ public class Analyzer {
 							se.Action == SolutionAction.AddProjectItem;
 					if( flag2 ){
 						f2++;
-						break;
 					}
 				}else{
 					continue;

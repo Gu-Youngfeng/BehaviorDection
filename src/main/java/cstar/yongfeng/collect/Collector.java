@@ -1,9 +1,17 @@
 package cstar.yongfeng.collect;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import cc.kave.commons.model.events.CommandEvent;
 import cc.kave.commons.model.events.IDEEvent;
 import cc.kave.commons.model.events.visualstudio.DebuggerEvent;
 import cc.kave.commons.model.events.visualstudio.DebuggerMode;
@@ -185,6 +193,108 @@ public class Collector {
 		}
 		
 		this.lslsEvents = lslsevents;
+	}	
+	
+	/**
+	 * <p>To count the <b>In-IDE</b> time of developers. 
+	 * We count events between pair of first <b>Startup</b> and last <b>Shutdown</b>.</p>
+	 * @return count in long type
+	 */
+	public static long getInIDETime(String path){
+		
+		long delt = 0;
+		
+		try {
+			List<String> lsContext = readContext(path);
+			long start = 0l;
+			long end = 0l;
+			List<String> lsShutdown = new ArrayList<String>();
+			for(String line: lsContext){
+//				System.out.println(">>" + line);
+				if(line.contains("IDEStateEvent") && line.contains("Startup")){
+					System.out.println("[Startup ]: " + line);
+					if( start == 0 ){ // new start
+						start = extractDate(line);
+					}else if( lsShutdown.size() != 0 && start !=0 ){ // another start
+						end = extractDate(lsShutdown.get(lsShutdown.size()-1));
+						delt += end - start;
+						System.out.println("[Duration]: " + delt);
+						start = extractDate(line); end = 0;
+						lsShutdown.clear();
+					}else{
+						
+					}
+				}else if(line.contains("IDEStateEvent") && line.contains("Shutdown")){
+					System.out.println("[Shutdown]: " + line);
+					lsShutdown.add(line);		
+				}else{
+					continue;
+				}
+			}
+			
+			if(start != 0){ // if the end event is not the IDEStateEvent.Shutdown
+				end = extractDate(lsContext.get(lsContext.size()-1));
+				delt += end - start;
+				System.out.println("[Duration]: " + delt*1.0/1000*60*1.0);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return delt;
+
+	}
+	
+	private static List<String> readContext(String userProfile) throws Exception{
+		
+		File file = new File(userProfile);
+		FileReader fr = new FileReader(file);
+		@SuppressWarnings("resource")
+		BufferedReader br = new BufferedReader(fr);
+		
+		List<String> lsItems = new ArrayList<String>();
+		
+		String line = "";
+		String lineAdd = "";
+		while((line = br.readLine()) != null){ // we only collect the legal developers
+			
+			if(line.startsWith("### ")){
+				lineAdd += line;
+				lsItems.add(line);
+			}else if(line.startsWith("[") || line.equals("EMPTY")){
+				lineAdd += " | " + line;
+			}else{
+				lsItems.add(lineAdd);
+				lineAdd = "";
+			}
+		}
+		
+		return lsItems;
+	}
+	
+	public static long extractDate(String line){
+		long tim = 0l;
+		
+//		System.out.println("[line]: " + line);
+		int indexStart = line.indexOf("|");
+//		System.out.println(indexStart);
+		int indexEnd = line.lastIndexOf("|");
+//		System.out.println(indexEnd);
+		String strDate = line.substring(indexStart+2, indexEnd-1);
+//		System.out.println("[mid ]: " + strDate);
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd'T'hh:mm:ss");
+		
+		try {
+			Date date = sdf.parse(strDate);
+			tim = date.getTime();
+//			System.out.println("[date]: " + date.toString());
+		} catch (ParseException e) {
+			
+			e.printStackTrace();
+		}
+		
+		return tim;
 	}
 
 }

@@ -1,11 +1,25 @@
 package cstar.yongfeng.collect;
 
+import java.text.ParseException;
 import java.util.List;
 
 public class Launcher {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParseException {
 		
+		/** TESTING **/
+//		Collector collector = new Collector("C:/MSR18Dataset/Events-170301-2/Events-170301-2/2016-05-09/1.zip", CollectType.WorkTime);
+//		for(ArrayList<IDEEvent> lsStream: collector.getlslsEvent()){
+//			for(IDEEvent event: lsStream){
+//				MsgGetter getter = new MsgGetter(event);
+//				System.out.println(getter.getInfo());
+//			}
+//			System.out.println("--------");
+//		}
+		long count = Collector.getInIDETime("E:/workspaceee/BehaviorDection/src/main/resources/total/2016-05-09-10.zip.txt");
+		System.out.println("[SumTime]: " + count*1.0/(1000*60*1.0));
+		
+//		System.out.println("[strDate]: " + Collector.extractDate("### IDEStateEvent | 2016-12-12T23:36:35.259339900+01:00 | [lifeCycle]:Shutdown"));
 		
 		
 		/**STEP 1: Divide the user based on Programming Skills: Positive & Negative & Neutral
@@ -58,7 +72,7 @@ public class Launcher {
 		/**
 		 * STEP 1 & 2
 		 */
-		DoWorks(userProfile, "Positive"); // to get rid of the risk of memory leak.
+//		DoWorks(userProfile, "Positive"); // to get rid of the risk of memory leak.
 //		DoWorks(userProfile, "Negative");
 //		DoWorks(userProfile, "Neutral");
 	}
