@@ -8,7 +8,7 @@ package cstar.yongfeng.collect;
  * debugMonitor, debugStepOUT, debugRunCursor, debugAddWatch </li></p>
  * <p><b>2. Debugging Tricks</b> <li> debugEditing, debugBreakCondition, debugExeChanged, debugOutScope, 
  * debugBreakException, debugMultiThread, debugPerformance, debugNextStatement </li></p>
- * <p><b>3. Debugging Common Sense</b> <li> debugTimes, workTime, debugTime </li></p>
+ * <p><b>3. Debugging Common Sense</b> <li> debugTimes, debugTime, workTime, workDay </li></p>
  */
 public class UsageGetter {
 	
@@ -26,22 +26,16 @@ public class UsageGetter {
 	 * <p>UsageGetter constructor.</p>
 	 * @param path developers' zip data path.
 	 */
-	public UsageGetter(String path, CollectType type){
+	public UsageGetter(String path){
 		
-		Collector collectorDebugger = new Collector(path, type);
+		Collector collectorDebugger = new Collector(path, CollectType.DebugTime);
 		analyzerDebugger = new Analyzer(collectorDebugger.getlslsEvent());
-		
-		if(type == CollectType.DebugTime){			
-			getDebugUsage();
-		}else if(type == CollectType.WorkTime){
-			getTotalUsage();
-		}else{
-			return;
-		}
+				
+		getUsage(path);
 	}
 	
 	/** To get the 17 metrics*/
-	private void getDebugUsage(){
+	private void getUsage(String path){
 		
 		/** Print in Console Windows */
 //		System.out.println("Debugging            :" + analyzerDebugger.getStreamTimes());
@@ -65,8 +59,9 @@ public class UsageGetter {
 		
 		/** Print in vector pattern */
 		int debugTimes = analyzerDebugger.getStreamTimes();
-//		float workTime = analyzerWorkTime.getStreamDuration(); // see getTotalUsage()
+		long workTime = Collector.getInIDETime(Collector.searchEventFile(path));
 		float debugTime = analyzerDebugger.getStreamDuration();
+		long workDay = Collector.getDevelopDays(Collector.searchEventFile(path));
 		
 		int debugBreakpoint = analyzerDebugger.getBreakpoint();
 		int debugRestart = analyzerDebugger.getRestart();
@@ -83,80 +78,22 @@ public class UsageGetter {
 		int debugOutScope = analyzerDebugger.getOutScope();
 		int debugBreakException = analyzerDebugger.getBreakException();
 		int debugMultiThread = analyzerDebugger.getMultiThread();
-//		int debugPerformance = analyzerWorkTime.getPerformance(); // see getTotalUsage()
+		int debugPerformance = Collector.getPerformance(Collector.searchEventFile(path));
 		int debugNextStatement = analyzerDebugger.getSetNextStatement();
 		
 		this.attributes = new float[]{debugBreakpoint, debugRestart, debugStepIO, debugStepSP, 
 				debugMonitor, debugStepOUT, debugRunCursor, debugAddWatch,
 				debugEditing, debugBreakCondition, debugExeChanged, debugOutScope, 
 				debugBreakException, debugMultiThread, 
-//				debugPerformance, 
+				debugPerformance, 
 				debugNextStatement,
 				
-				debugTimes, 
-//				workTime, 
-				debugTime
+				debugTimes,  
+				debugTime,
+				workTime,
+				workDay,
 				};	
 		
-	}
-	
-	/** To get the 2 metrics*/
-	private void getTotalUsage(){
-		/** Print in Console Windows */
-//		System.out.println("Debugging            :" + analyzerDebugger.getStreamTimes());
-//		System.out.println("[Breakpoint]         : " + analyzerDebugger.getBreakpoint());
-//		System.out.println("[Restart Debugging]  : " + analyzerDebugger.getRestart());
-//		System.out.println("[StepInto & StepOver]: " + analyzerDebugger.getStepIntoOver());
-//		System.out.println("[StepIntoSpecific]   : " + analyzerDebugger.getStepIntoSpecific());
-//		System.out.println("[Monitor]            : " + analyzerDebugger.getMonitors());
-//		System.out.println("[StepOut]            : " + analyzerDebugger.getStepOut());
-//		System.out.println("[RuntoCursor]        : " + analyzerDebugger.getRuntoCursor());
-//		System.out.println("[Add Watch]          : " + analyzerDebugger.getAddWatch());
-//		
-//		System.out.println("[Editing]            : " + analyzerDebugger.getEditing());
-//		System.out.println("[Break Condition    ]: " + analyzerDebugger.getBreakCondition());
-//		System.out.println("[Execution Changed]  : " + analyzerDebugger.getExecutionChanged());
-//		System.out.println("[OutofScope]         : " + analyzerDebugger.getOutScope());
-//		System.out.println("[Break at Handled]   : " + analyzerDebugger.getBreakException());
-//		System.out.println("[MultiThreads View]  : " + analyzerDebugger.getMultiThread());
-//		System.out.println("[Obeserving Performs]: " + analyzerWorkTime.getPerformance());
-//		System.out.println("[Set Next Statement] : " + analyzerDebugger.getSetNextStatement());
-		
-		/** Print in vector pattern */
-//		int debugTimes = analyzerDebugger.getStreamTimes();
-		float workTime = analyzerDebugger.getStreamDuration(); // see getTotalUsage()
-//		float debugTime = analyzerDebugger.getStreamDuration();
-		
-//		int debugBreakpoint = analyzerDebugger.getBreakpoint();
-//		int debugRestart = analyzerDebugger.getRestart();
-//		int debugStepIO = analyzerDebugger.getStepIntoOver();
-//		int debugStepSP = analyzerDebugger.getStepIntoSpecific();
-//		int debugMonitor = analyzerDebugger.getMonitors();
-//		int debugStepOUT = analyzerDebugger.getStepOut();
-//		int debugRunCursor = analyzerDebugger.getRuntoCursor();
-//		int debugAddWatch = analyzerDebugger.getAddWatch();
-		
-//		int debugEditing = analyzerDebugger.getEditing();
-//		int debugBreakCondition = analyzerDebugger.getBreakCondition();
-//		int debugExeChanged = analyzerDebugger.getExecutionChanged();
-//		int debugOutScope = analyzerDebugger.getOutScope();
-//		int debugBreakException = analyzerDebugger.getBreakException();
-//		int debugMultiThread = analyzerDebugger.getMultiThread();
-//		int debugPerformance = analyzerDebugger.getPerformance(); // see getTotalUsage()
-//		int debugNextStatement = analyzerDebugger.getSetNextStatement();
-		
-		this.attributes = new float[]{
-//				debugBreakpoint, debugRestart, debugStepIO, debugStepSP, 
-//				debugMonitor, debugStepOUT, debugRunCursor, debugAddWatch,
-//				debugEditing, debugBreakCondition, debugExeChanged, debugOutScope, 
-//				debugBreakException, debugMultiThread, 
-//				debugPerformance, 
-//				debugNextStatement,
-//				
-//				debugTimes, 
-				workTime, 
-//				debugTime
-				};	
 	}
 	
 	/**

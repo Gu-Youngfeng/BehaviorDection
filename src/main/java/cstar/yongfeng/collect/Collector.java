@@ -7,11 +7,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.Set;
 
-import cc.kave.commons.model.events.CommandEvent;
 import cc.kave.commons.model.events.IDEEvent;
 import cc.kave.commons.model.events.visualstudio.DebuggerEvent;
 import cc.kave.commons.model.events.visualstudio.DebuggerMode;
@@ -212,20 +211,20 @@ public class Collector {
 			for(String line: lsContext){
 //				System.out.println(">>" + line);
 				if(line.contains("IDEStateEvent") && line.contains("Startup")){
-					System.out.println("[Startup ]: " + line);
+//					System.out.println("[Startup ]: " + line);
 					if( start == 0 ){ // new start
 						start = extractDate(line);
 					}else if( lsShutdown.size() != 0 && start !=0 ){ // another start
 						end = extractDate(lsShutdown.get(lsShutdown.size()-1));
 						delt += end - start;
-						System.out.println("[Duration]: " + delt);
+//						System.out.println("[Duration]: " + delt);
 						start = extractDate(line); end = 0;
 						lsShutdown.clear();
 					}else{
 						
 					}
 				}else if(line.contains("IDEStateEvent") && line.contains("Shutdown")){
-					System.out.println("[Shutdown]: " + line);
+//					System.out.println("[Shutdown]: " + line);
 					lsShutdown.add(line);		
 				}else{
 					continue;
@@ -235,7 +234,7 @@ public class Collector {
 			if(start != 0){ // if the end event is not the IDEStateEvent.Shutdown
 				end = extractDate(lsContext.get(lsContext.size()-1));
 				delt += end - start;
-				System.out.println("[Duration]: " + delt*1.0/1000*60*1.0);
+//				System.out.println("[Duration]: " + delt*1.0/1000*60*1.0);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -260,7 +259,7 @@ public class Collector {
 			
 			if(line.startsWith("### ")){
 				lineAdd += line;
-				lsItems.add(line);
+//				lsItems.add(line);
 			}else if(line.startsWith("[") || line.equals("EMPTY")){
 				lineAdd += " | " + line;
 			}else{
@@ -296,5 +295,114 @@ public class Collector {
 		
 		return tim;
 	}
+	
+	/**
+	 * <p>Feature 15: To get the performance profile... usage times.</p>
+	 * @return count in long type
+	 */
+	public static int getPerformance(String path){
+		
+		int count = 0;
+		
+		try {
+			List<String> lsContext = readContext(path);
 
+			for(String line: lsContext){
+				if(line.contains("Performance Profiler...")){
+					count++;
+				}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return count;
+
+	}
+	
+	/**
+	 * <p>To turn the userZip to path format.</p>
+	 * <pre>C:/MSR18Dataset/Events-170301-2/Events-170301-2/2016-05-09/1.zip
+	 *>>>>>> 
+	 *E:/workspaceee/BehaviorDection/src/main/resources/total/2016-05-09-1.zip.txt 
+	 * </pre>
+	 * @param userZip
+	 * @return
+	 */
+	public static String searchEventFile(String userZip){
+		String path = "";
+		
+		String[] splitZip = userZip.split("/");
+		int len = splitZip.length;
+		if(len >= 2){
+			if(userZip.contains("earlier") && userZip.contains("data")){
+				String head = splitZip[len-4];
+				String next1 = splitZip[len-3];
+				String next2 = splitZip[len-2];
+				String next3 = splitZip[len-1];
+				path = "E:/workspaceee/BehaviorDection/src/main/resources/total/" + head + "-" + next1 + "-" + next2 + "-" + next3+ ".txt";
+			}else{
+				String head = splitZip[len-2];
+				String next = splitZip[len-1];
+				path = "E:/workspaceee/BehaviorDection/src/main/resources/total/" + head + "-" + next + ".txt";
+			}
+		}
+		
+		return path;
+	}
+	
+	/**
+	 * <p>To get the developmental day. I.e, to count the appearing date in the dataset.</p>
+	 * @param path
+	 * @return
+	 */
+	public static int getDevelopDays(String path){
+
+		Set<String> lsDate = new HashSet<String>();
+		
+		try {
+			List<String> lsContext = readContext(path);
+
+			for(String line: lsContext){
+//				System.out.println(line);
+				String date = extracrDateString(line);
+				lsDate.add(date);
+//				System.out.println("[Day]: " + date);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+//		for(String line: lsDate){
+//			System.out.println("[Day]: " + line);
+//		}
+		
+		return lsDate.size();
+	}
+
+	/**
+	 * <p>To get the date string of the line</p>
+	 * <pre>
+	 *### CommandEvent | 2016-05-23T06:36:48.563124200-07:00 | [command]:VsAction:1:File.Exit
+	 *>>>>
+	 *2016-05-23
+	 * </pre>
+	 * @param line
+	 * @return
+	 */
+	private static String extracrDateString(String line){
+		String strTime = "";
+
+		int indexStart = line.indexOf("|");
+		int indexEnd = line.lastIndexOf("|");
+		String strDate = line.substring(indexStart+2, indexEnd-1);
+		
+		String[] strList = strDate.split("T");
+		
+		strTime = strList[0];
+
+		return strTime;
+	}
 }

@@ -16,11 +16,15 @@ public class Launcher {
 //			}
 //			System.out.println("--------");
 //		}
-		long count = Collector.getInIDETime("E:/workspaceee/BehaviorDection/src/main/resources/total/2016-05-09-10.zip.txt");
-		System.out.println("[SumTime]: " + count*1.0/(1000*60*1.0));
+//		long count = Collector.getInIDETime("E:/workspaceee/BehaviorDection/src/main/resources/total/2016-05-09-10.zip.txt");
+//		System.out.println("[SumTime]: " + count*1.0/(1000*60*1.0));
+//		int count2 = Collector.getPerformance("E:/workspaceee/BehaviorDection/src/main/resources/total/2016-05-09-10.zip.txt");
+//		System.out.println("[perform]: " + count2);
+		
+//		System.out.println("[path]:" + Collector.searchEventFile("C:/MSR18Dataset/Events-170301-2/Events-170301-2/2016-05-09/1.zip"));
 		
 //		System.out.println("[strDate]: " + Collector.extractDate("### IDEStateEvent | 2016-12-12T23:36:35.259339900+01:00 | [lifeCycle]:Shutdown"));
-		
+//		Collector.getDevelopDays("E:/workspaceee/BehaviorDection/src/main/resources/total/2016-05-09-10.zip.txt");
 		
 		/**STEP 1: Divide the user based on Programming Skills: Positive & Negative & Neutral
 		 *         We can also divide the user based on other attribute, such as position, etc..
@@ -72,22 +76,22 @@ public class Launcher {
 		/**
 		 * STEP 1 & 2
 		 */
-//		DoWorks(userProfile, "Positive"); // to get rid of the risk of memory leak.
-//		DoWorks(userProfile, "Negative");
-//		DoWorks(userProfile, "Neutral");
+		
+		DoWorks(userProfile, "Positive"); // to get rid of the risk of memory leak.
+		DoWorks(userProfile, "Negative");
+		DoWorks(userProfile, "Neutral");
 	}
 	
 	public static void DoWorks(String userProfile, String prefix){
 		List<String> lsPositivePaths = UserDivition.getUserByKeyWrods(userProfile, prefix);
-//		System.out.println("\n[positive size]----" + lsPositivePaths.size());
+		System.out.println("\n[positive size]----" + lsPositivePaths.size());
 //		for(String path: lsPositivePaths){
 //			System.out.println("[userZip]: " +path);
 //		}
 		for(String path: lsPositivePaths){
-			UsageGetter usager = new UsageGetter(path, CollectType.DebugTime);
+			UsageGetter usager = new UsageGetter(path);
 			usager.showMetric();
-//			UsageGetter usager = new UsageGetter(path, CollectType.WorkTime);
-//			usager.showMetric();
+			
 			System.out.println("");
 			break;
 		}
