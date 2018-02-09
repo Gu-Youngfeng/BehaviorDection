@@ -197,9 +197,9 @@ public class Collector {
 	/**
 	 * <p>To count the <b>In-IDE</b> time of developers. 
 	 * We count events between pair of first <b>Startup</b> and last <b>Shutdown</b>.</p>
-	 * @return count in long type
+	 * @return count in minutes
 	 */
-	public static long getInIDETime(String path){
+	public static float getInIDETime(String path){
 		
 		long delt = 0;
 		
@@ -240,7 +240,9 @@ public class Collector {
 			e.printStackTrace();
 		}
 		
-		return delt;
+		float deltMiute = (float) ((float) delt*1.0/(1000*60*1.0));
+		
+		return deltMiute;
 
 	}
 	
@@ -394,15 +396,18 @@ public class Collector {
 	 */
 	private static String extracrDateString(String line){
 		String strTime = "";
-
-		int indexStart = line.indexOf("|");
-		int indexEnd = line.lastIndexOf("|");
-		String strDate = line.substring(indexStart+2, indexEnd-1);
 		
-		String[] strList = strDate.split("T");
-		
-		strTime = strList[0];
-
+		if(!line.contains("###") || !line.contains("Event")){
+			strTime = "";
+		}else{
+			int indexStart = line.indexOf("|");
+			int indexEnd = line.lastIndexOf("|");
+			String strDate = line.substring(indexStart+2, indexEnd-1);
+			
+			String[] strList = strDate.split("T");
+			
+			strTime = strList[0];
+		}
 		return strTime;
 	}
 }

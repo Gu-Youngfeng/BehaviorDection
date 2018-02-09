@@ -4,11 +4,11 @@ package cstar.yongfeng.collect;
  * <p>Class <b>UsageGetter</b> provides the interface of accessing the metrics in developers' debugging process.
  * The function {@link#getMtric()} will return the metric values of one developer. The <b>19</b> metrics are,</p> 
  *
- * <p><b>1. Debugging Foundations</b> <li> debugBreakpoint, debugRestart, debugStepIO, debugStepSP, 
+ * <p><b>1. Debugging Foundations</b> {8} <li> debugBreakpoint, debugRestart, debugStepIO, debugStepSP, 
  * debugMonitor, debugStepOUT, debugRunCursor, debugAddWatch </li></p>
- * <p><b>2. Debugging Tricks</b> <li> debugEditing, debugBreakCondition, debugExeChanged, debugOutScope, 
- * debugBreakException, debugMultiThread, debugPerformance, debugNextStatement </li></p>
- * <p><b>3. Debugging Common Sense</b> <li> debugTimes, debugTime, workTime, workDay </li></p>
+ * <p><b>2. Debugging Tricks</b> {7} <li> debugEditing, debugBreakCondition, debugExeChanged, debugOutScope, 
+ * debugBreakException, debugMultiThread, debugNextStatement </li></p>
+ * <p><b>3. Debugging Common Sense</b> {6} <li> debugTimes, debugTime, workTime, workDay, failedDebugTimes, debugPerformance, </li></p>
  */
 public class UsageGetter {
 	
@@ -59,9 +59,11 @@ public class UsageGetter {
 		
 		/** Print in vector pattern */
 		int debugTimes = analyzerDebugger.getStreamTimes();
-		long workTime = Collector.getInIDETime(Collector.searchEventFile(path));
+		float workTime = Collector.getInIDETime(Collector.searchEventFile(path));
 		float debugTime = analyzerDebugger.getStreamDuration();
-		long workDay = Collector.getDevelopDays(Collector.searchEventFile(path));
+		int workDay = Collector.getDevelopDays(Collector.searchEventFile(path));
+		int failedDebugTimes = analyzerDebugger.getFialedDebugging();
+//		int successDebugTimes = analyzerDebugger.getEndDebugging();
 		
 		int debugBreakpoint = analyzerDebugger.getBreakpoint();
 		int debugRestart = analyzerDebugger.getRestart();
@@ -83,15 +85,17 @@ public class UsageGetter {
 		
 		this.attributes = new float[]{debugBreakpoint, debugRestart, debugStepIO, debugStepSP, 
 				debugMonitor, debugStepOUT, debugRunCursor, debugAddWatch,
+				
 				debugEditing, debugBreakCondition, debugExeChanged, debugOutScope, 
-				debugBreakException, debugMultiThread, 
-				debugPerformance, 
-				debugNextStatement,
+				debugBreakException, debugMultiThread, debugNextStatement,
 				
 				debugTimes,  
 				debugTime,
 				workTime,
 				workDay,
+				failedDebugTimes,
+				debugPerformance,
+//				successDebugTimes
 				};	
 		
 	}

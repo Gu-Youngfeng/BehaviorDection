@@ -63,7 +63,7 @@ public class Analyzer {
 	
 	/**
 	 * <p>Feature 18/19: To get the duration time of whole event streams.</p>
-	 * @return duration time
+	 * @return duration time in minutes
 	 */
 	public float getStreamDuration(){
 		long tim = 0l;
@@ -145,8 +145,6 @@ public class Analyzer {
 						count++;
 						break;
 					}
-				}else{
-					continue;
 				}
 			}
 			
@@ -177,8 +175,6 @@ public class Analyzer {
 						count++;
 						break;
 					}
-				}else{
-					continue;
 				}
 			}
 			
@@ -197,30 +193,32 @@ public class Analyzer {
 		
 		for(int i=0; i<lslsEvents.size(); i++){ // for each stream
 			ArrayList<IDEEvent> lsStream = lslsEvents.get(i);
-			int flag1 = 0;
-			int flag2 = 0;
+
 			for(int j=0; j<lsStream.size(); j++){ // for each event
 				IDEEvent event = lsStream.get(j);
 
 				if(event instanceof DebuggerEvent){
-					/** stepIntoSpecific operation in debugging process */
-					if(((DebuggerEvent)event).Mode == DebuggerMode.Run && ((DebuggerEvent)event).Reason.equals("dbgEventReasonGo")==true){
-						flag1 ++;
+					DebuggerEvent de = (DebuggerEvent) event;
+					if(de.Mode == DebuggerMode.Run && de.Reason.equals("dbgEventReasonStep")){
+						IDEEvent eventbefore = lsStream.get(j-1);
+						if(eventbefore instanceof CommandEvent){
+							CommandEvent ce = (CommandEvent) eventbefore;
+							boolean f1 = !ce.getCommandId().contains("VsAction:1:Debug");
+							boolean f2 = !ce.getCommandId().contains("Step Into");
+							boolean f3 = !ce.getCommandId().contains("}:");
+							boolean f4 = !ce.getCommandId().contains("Step Over");
+							boolean f5 = !ce.getCommandId().contains("Step Out");
+							
+							if( f1 && f2 && f3 && f4 && f5 ){
+								count++;
+								break;
+							}
+						}
 					}
-
-				}else if(event instanceof CommandEvent){
-					/** click unknown button */
-					if(((CommandEvent)event).getCommandId().equals("unknown button")==true){
-						flag2++;
-					}	
-				}else{
-					continue;
-				}	
+				}		
 				
 			}
-			if( flag1>=1 && flag2>=1 ){
-				count++;
-			}
+			
 		}
 		
 		return count;
@@ -259,8 +257,6 @@ public class Analyzer {
 						break;
 					}
 
-				}else{
-					continue;
 				}	
 				
 			}
@@ -292,8 +288,6 @@ public class Analyzer {
 						break;
 					}
 
-				}else{
-					continue;
 				}	
 				
 			}
@@ -304,7 +298,9 @@ public class Analyzer {
 	
 	/**
 	 * <p>Feature 7: To calculate the number of using operation <b>Run To Cursor</b>.</p>
-	 * <p>Note that the operation can be conducted <b>BEFORE</b> or <b>DURING</b> the debugging process, the triggered events might be a little different.</p>
+	 * <p>Note that the operation can be conducted <b>BEFORE</b> or <b>DURING</b> the debugging process, 
+	 * 
+	 * </p>
 	 * @return Run to cursor operations usage time
 	 */
 	public int getRuntoCursor(){
@@ -442,31 +438,32 @@ public class Analyzer {
 	/**
 	 * <p>Feature 11: To calculate the number of using operation <b>Changing Execution Stream</b>.</p>
 	 * @return Execution changing usage time
+	 * TODO: bugs
 	 */
 	public int getExecutionChanged(){
 		int count = 0;
 		
 		for(int i=0; i<lslsEvents.size(); i++){ // for each stream
 			ArrayList<IDEEvent> lsStream = lslsEvents.get(i);
-			int f1 = 0;
+
 			for(int j=0; j<lsStream.size(); j++){ // for each event
 				IDEEvent event = lsStream.get(j);
-
-				if(event instanceof CommandEvent){
-					CommandEvent ce = (CommandEvent)event;
-					boolean flag1 = ce.getCommandId().contains(":295:Debug.Start");
-					if( flag1 ){
-						f1++;
-					}
-				}else{
-					continue;
-				}	
 				
-			}
-			
-			if( f1 >=2 ){
-				count++;
-				break;
+				if(event instanceof DebuggerEvent){
+					DebuggerEvent de = (DebuggerEvent) event;
+					if(de.Mode == DebuggerMode.Run && de.Reason.equals("dbgEventReasonGo")){
+						IDEEvent eventbefore = lsStream.get(j-1);
+						if(eventbefore instanceof CommandEvent){
+							CommandEvent ce = (CommandEvent) eventbefore;
+							if(ce.getCommandId().contains(":295:Debug.Start") || ce.getCommandId().contains(":Debug.Start")){
+								count++;
+								break;
+							}
+							
+						}
+					}
+					
+				}								
 			}
 		}
 		
@@ -515,28 +512,30 @@ public class Analyzer {
 		
 		for(int i=0; i<lslsEvents.size(); i++){ // for each stream
 			ArrayList<IDEEvent> lsStream = lslsEvents.get(i);
-			int flag1 = 0;
-			int flag2 = 0;
+//			int flag1 = 0;
+//			int flag2 = 0;
 			for(int j=0; j<lsStream.size(); j++){ // for each event
 				IDEEvent event = lsStream.get(j);			
 
 				if(event instanceof CommandEvent){
 					CommandEvent ce = (CommandEvent)event;
 					if(ce.getCommandId().contains("Exception Settings") || ce.getCommandId().contains(":339:Debug.ExceptionSettings")){
-						flag1++;
+//						flag1++;
+						count++;
+						break;
 					}
-				}else if(event instanceof DebuggerEvent){
-					DebuggerEvent de = (DebuggerEvent)event;
-					if(de.Mode == DebuggerMode.Run && de.Reason.equals("dbgEventReasonExceptionThrown")){
-						flag2++;
-					}
+//				}else if(event instanceof DebuggerEvent){
+//					DebuggerEvent de = (DebuggerEvent)event;
+//					if(de.Mode == DebuggerMode.Run && de.Reason.equals("dbgEventReasonExceptionThrown")){
+//						flag2++;
+//					}
 				}else{
 					continue;
 				}	
 			}
-			if(flag1 >= 1 && flag2 >= 1){
-				count++;
-			}
+//			if(flag1 >= 1 && flag2 >= 1){
+//				count++;
+//			}
 		}	
 		return count;
 	}
@@ -575,6 +574,7 @@ public class Analyzer {
 	 * <p>Note: Performance Observation CANNOT triggered <b>DebuggerEvent</b>. 
 	 * So we have to search this operation in the <b>whole event stream</b> RATHER THAN in <b>debugging stream</b>.</p>
 	 * @return observe performance time
+	 * @deprecated Instead by function Collector.getPerformance()
 	 */
 	public int getPerformance(){
 		int count = 0;
@@ -638,6 +638,60 @@ public class Analyzer {
 					}
 				}else{
 					continue;
+				}	
+			}
+		}	
+		return count;
+	}
+	
+	/**
+	 * <p>To get the unexpected exception break</p>
+	 * @return
+	 */
+	public int getFialedDebugging(){
+		int count = 0;
+		
+		for(int i=0; i<lslsEvents.size(); i++){ // for each stream
+			ArrayList<IDEEvent> lsStream = lslsEvents.get(i);
+			for(int j=0; j<lsStream.size(); j++){ // for each event
+				IDEEvent event = lsStream.get(j);			
+
+				if(event instanceof DebuggerEvent){
+					DebuggerEvent de = (DebuggerEvent)event;
+
+					boolean flag1 = (de.Mode == DebuggerMode.Break &&
+							de.Reason.equals("dbgEventReasonExceptionNotHandled"));
+					if( flag1 ){
+						count++;
+						break;
+					}
+				}	
+			}
+		}	
+		return count;
+	}
+	
+	/**
+	 * <p>To get the successful debugging</p>
+	 * @return
+	 */
+	public int getEndDebugging(){
+		int count = 0;
+		
+		for(int i=0; i<lslsEvents.size(); i++){ // for each stream
+			ArrayList<IDEEvent> lsStream = lslsEvents.get(i);
+			for(int j=0; j<lsStream.size(); j++){ // for each event
+				IDEEvent event = lsStream.get(j);			
+
+				if(event instanceof DebuggerEvent){
+					DebuggerEvent de = (DebuggerEvent)event;
+
+					boolean flag1 = (de.Mode == DebuggerMode.Design &&
+							de.Reason.equals("dbgEventReasonEndProgram"));
+					if( flag1 ){
+						count++;
+						break;
+					}
 				}	
 			}
 		}	
