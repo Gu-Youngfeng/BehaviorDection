@@ -1,14 +1,17 @@
 package cstar.yongfeng.collect;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
+
+import cc.kave.commons.model.events.IDEEvent;
 
 public class Launcher {
 
 	public static void main(String[] args) throws ParseException {
 		
 		/** TESTING **/
-//		Collector collector = new Collector("C:/MSR18Dataset/Events-170301-2/Events-170301-2/2016-05-09/1.zip", CollectType.WorkTime);
+//		Collector collector = new Collector("C:/MSR18Dataset/Events-170301-2/Events-170301-2/2016-05-09/1.zip", CollectType.DebugTime);
 //		for(ArrayList<IDEEvent> lsStream: collector.getlslsEvent()){
 //			for(IDEEvent event: lsStream){
 //				MsgGetter getter = new MsgGetter(event);

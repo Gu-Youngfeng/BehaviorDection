@@ -197,7 +197,7 @@ public class Analyzer {
 			for(int j=0; j<lsStream.size(); j++){ // for each event
 				IDEEvent event = lsStream.get(j);
 
-				if(event instanceof DebuggerEvent){
+				if(event instanceof DebuggerEvent && j>0){
 					DebuggerEvent de = (DebuggerEvent) event;
 					if(de.Mode == DebuggerMode.Run && de.Reason.equals("dbgEventReasonStep")){
 						IDEEvent eventbefore = lsStream.get(j-1);
@@ -448,10 +448,12 @@ public class Analyzer {
 
 			for(int j=0; j<lsStream.size(); j++){ // for each event
 				IDEEvent event = lsStream.get(j);
-				
-				if(event instanceof DebuggerEvent){
+//				System.out.println("[j]    :" + (j));
+				if(event instanceof DebuggerEvent && j>0){
 					DebuggerEvent de = (DebuggerEvent) event;
 					if(de.Mode == DebuggerMode.Run && de.Reason.equals("dbgEventReasonGo")){
+//						System.out.println("[event]:" + de.toString());
+//						System.out.println("[j-1]  :" + (j-1));
 						IDEEvent eventbefore = lsStream.get(j-1);
 						if(eventbefore instanceof CommandEvent){
 							CommandEvent ce = (CommandEvent) eventbefore;
