@@ -1,10 +1,10 @@
 package cstar.yongfeng.collect;
 
 import java.text.ParseException;
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.List;
 
-import cc.kave.commons.model.events.IDEEvent;
+//import cc.kave.commons.model.events.IDEEvent;
 
 public class Launcher {
 
@@ -79,7 +79,7 @@ public class Launcher {
 		/**
 		 * STEP 1 & 2
 		 */
-		
+
 		DoWorks(userProfile, "Positive"); // to get rid of the risk of memory leak.
 		DoWorks(userProfile, "Negative");
 		DoWorks(userProfile, "Neutral");

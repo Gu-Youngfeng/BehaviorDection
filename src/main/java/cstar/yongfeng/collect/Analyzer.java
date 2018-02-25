@@ -85,10 +85,9 @@ public class Analyzer {
 	// Debugging Foundations
 	
 	/**
-	 * <p>Feature 1: To calculate the number of using breakpoint.</p>
+	 * <p>Feature 1: To calculate the number of using breakpoint successfully.</p>
+	 * <p>Note: We ONLY count the execution break at the break point.</p>
 	 * @return breakpoint usage time
-	 * @BUG If the developer sets breakpoint by clicking and the program did not stop at the breakpoint,
-	 *      the operation <b>CAN NOT</b> be captured.
 	 */
 	public int getBreakpoint(){
 		int count = 0;
@@ -97,25 +96,26 @@ public class Analyzer {
 			ArrayList<IDEEvent> lsStream = lslsEvents.get(i);
 			for(int j=0; j<lsStream.size(); j++){ // for each event
 				IDEEvent event = lsStream.get(j);
-				if(event instanceof CommandEvent){
-					/** insert breakpoint by using right click menu */
-					boolean flag1 = ((CommandEvent)event).getCommandId().contains(":375:EditorContextMenus.CodeWindow.Breakpoint.InsertBreakpoint");
-					/** insert breakpoint by pressing shortcut F9 */
-					boolean flag2 = ((CommandEvent)event).getCommandId().contains(":255:Debug.ToggleBreakpoint");
-					
-					if( flag1 || flag2){
-						count++;
-//						System.out.println("[time]:" + event.TriggeredAt.toString());
-						break;
-					}
-				}else if(event instanceof DebuggerEvent){
+//				if(event instanceof CommandEvent){
+//					/** insert breakpoint by using right click menu */
+//					boolean flag1 = ((CommandEvent)event).getCommandId().contains(":375:EditorContextMenus.CodeWindow.Breakpoint.InsertBreakpoint");
+//					/** insert breakpoint by pressing shortcut F9 */
+//					boolean flag2 = ((CommandEvent)event).getCommandId().contains(":255:Debug.ToggleBreakpoint");
+//					
+//					if( flag1 || flag2){
+//						count++;
+////						System.out.println("[time]:" + event.TriggeredAt.toString());
+//						break;
+//					}
+//				}else 
+				if(event instanceof DebuggerEvent){
 					/** program stops at the breakpoint */
 					boolean flag3 = (((DebuggerEvent)event).Mode==DebuggerMode.Break) && (((DebuggerEvent)event).Reason.equals("dbgEventReasonBreakpoint"));
 					
 					if( flag3 ){
 						count++;
 //						System.out.println("[time]:" + event.TriggeredAt.toString());
-						break;
+//						break;
 					}
 				}else{
 					continue;
@@ -143,7 +143,7 @@ public class Analyzer {
 					
 					if(flag1){
 						count++;
-						break;
+//						break;
 					}
 				}
 			}
@@ -173,7 +173,7 @@ public class Analyzer {
 					
 					if( flag1 || flag2){
 						count++;
-						break;
+//						break;
 					}
 				}
 			}
@@ -211,7 +211,7 @@ public class Analyzer {
 							
 							if( f1 && f2 && f3 && f4 && f5 ){
 								count++;
-								break;
+//								break;
 							}
 						}
 					}
@@ -254,7 +254,7 @@ public class Analyzer {
 					if(flag1 || flag2 || flag3 || flag4 || flag5 || flag6 || flag7 || flag8 || flag9){ // activate one of them
 						count++;
 //						System.out.println("[window]: " + we.Window.getCaption());
-						break;
+//						break;
 					}
 
 				}	
@@ -285,7 +285,7 @@ public class Analyzer {
 					if( flag1 ){
 						count++;
 //						System.out.println("[command]: " + ce.getCommandId());
-						break;
+//						break;
 					}
 
 				}	
@@ -319,7 +319,7 @@ public class Analyzer {
 					if( flag1 ){
 						count++;
 //						System.out.println("[command]: " + ce.getCommandId());
-						break;
+//						break;
 					}
 
 				}else{
@@ -352,7 +352,7 @@ public class Analyzer {
 					if( flag1 ){
 						count++;
 //						System.out.println("[command]: " + ce.getCommandId());
-						break;
+//						break;
 					}
 
 				}else{
@@ -383,12 +383,12 @@ public class Analyzer {
 				if(event instanceof CommandEvent){
 					CommandEvent ce = (CommandEvent)event;
 					/** editing during the debugging */
-					boolean flag1 = ce.getCommandId().contains("VsAction:1:Edit");
+					boolean flag1 = ce.getCommandId().contains("VsAction:1:Edit.");
 	
 					if( flag1 ){
 						count++;
 //						System.out.println("[command]: " + ce.getCommandId());
-						break;
+//						break;
 					}
 
 				}else{
@@ -422,7 +422,7 @@ public class Analyzer {
 					if( flag1 || flag2){
 						count++;
 //						System.out.println("[command]: " + ce.getCommandId());
-						break;
+//						break;
 					}
 
 				}else{
@@ -459,7 +459,7 @@ public class Analyzer {
 							CommandEvent ce = (CommandEvent) eventbefore;
 							if(ce.getCommandId().contains(":295:Debug.Start") || ce.getCommandId().contains(":Debug.Start")){
 								count++;
-								break;
+//								break;
 							}
 							
 						}
@@ -524,7 +524,7 @@ public class Analyzer {
 					if(ce.getCommandId().contains("Exception Settings") || ce.getCommandId().contains(":339:Debug.ExceptionSettings")){
 //						flag1++;
 						count++;
-						break;
+//						break;
 					}
 //				}else if(event instanceof DebuggerEvent){
 //					DebuggerEvent de = (DebuggerEvent)event;
@@ -561,7 +561,7 @@ public class Analyzer {
 							ce.getCommandId().contains(":346:DebuggerContextMenus.GPUThreadsWindowShortcutMenu.Debug.LocationToolbar.ShowThreadIpIndicators");
 					if( flag1 ){
 						count++;
-						break;
+//						break;
 					}
 				}else{
 					continue;
@@ -636,7 +636,7 @@ public class Analyzer {
 							ce.getCommandId().contains(":258:Debug.SetNextStatement");
 					if( flag1 ){
 						count++;
-						break;
+//						break;
 					}
 				}else{
 					continue;
@@ -665,7 +665,7 @@ public class Analyzer {
 							de.Reason.equals("dbgEventReasonExceptionNotHandled"));
 					if( flag1 ){
 						count++;
-						break;
+//						break;
 					}
 				}	
 			}
@@ -692,7 +692,7 @@ public class Analyzer {
 							de.Reason.equals("dbgEventReasonEndProgram"));
 					if( flag1 ){
 						count++;
-						break;
+//						break;
 					}
 				}	
 			}

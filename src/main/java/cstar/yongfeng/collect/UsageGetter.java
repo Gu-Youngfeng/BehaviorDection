@@ -2,7 +2,7 @@ package cstar.yongfeng.collect;
 
 /***
  * <p>Class <b>UsageGetter</b> provides the interface of accessing the metrics in developers' debugging process.
- * The function {@link#getMtric()} will return the metric values of one developer. The <b>19</b> metrics are,</p> 
+ * The function {@link#getMtric()} will return the metric values of one developer. The <b>21</b> metrics are,</p> 
  *
  * <p><b>1. Debugging Foundations</b> {8} <li> debugBreakpoint, debugRestart, debugStepIO, debugStepSP, 
  * debugMonitor, debugStepOUT, debugRunCursor, debugAddWatch </li></p>
@@ -59,29 +59,66 @@ public class UsageGetter {
 		
 		/** Print in vector pattern */
 		int debugTimes = analyzerDebugger.getStreamTimes();
-		float workTime = Collector.getInIDETime(Collector.searchEventFile(path));
 		float debugTime = analyzerDebugger.getStreamDuration();
+		float workTime = Collector.getInIDETime(Collector.searchEventFile(path));		
 		int workDay = Collector.getDevelopDays(Collector.searchEventFile(path));
 		int failedDebugTimes = analyzerDebugger.getFialedDebugging();
 //		int successDebugTimes = analyzerDebugger.getEndDebugging();
-		
-		int debugBreakpoint = analyzerDebugger.getBreakpoint();
-		int debugRestart = analyzerDebugger.getRestart();
-		int debugStepIO = analyzerDebugger.getStepIntoOver();
-		int debugStepSP = analyzerDebugger.getStepIntoSpecific();
-		int debugMonitor = analyzerDebugger.getMonitors();
-		int debugStepOUT = analyzerDebugger.getStepOut();
-		int debugRunCursor = analyzerDebugger.getRuntoCursor();
-		int debugAddWatch = analyzerDebugger.getAddWatch();
-		
-		int debugEditing = analyzerDebugger.getEditing();
-		int debugBreakCondition = analyzerDebugger.getBreakCondition();
-		int debugExeChanged = analyzerDebugger.getExecutionChanged();
-		int debugOutScope = analyzerDebugger.getOutScope();
-		int debugBreakException = analyzerDebugger.getBreakException();
-		int debugMultiThread = analyzerDebugger.getMultiThread();
 		int debugPerformance = Collector.getPerformance(Collector.searchEventFile(path));
-		int debugNextStatement = analyzerDebugger.getSetNextStatement();
+		
+		
+		float debugBreakpoint;
+		float debugRestart;
+		float debugStepIO;
+		float debugStepSP;
+		float debugMonitor;
+		float debugStepOUT;
+		float debugRunCursor;
+		float debugAddWatch;
+		
+		float debugEditing;
+		float debugBreakCondition;
+		float debugExeChanged;
+		float debugOutScope;
+		float debugBreakException;
+		float debugMultiThread;
+		float debugNextStatement;
+		
+		if(debugTimes != 0){
+			debugBreakpoint = (float) (analyzerDebugger.getBreakpoint()*1.0/debugTimes*1.0);
+			debugRestart = (float) (analyzerDebugger.getRestart()*1.0/debugTimes*1.0);
+			debugStepIO = (float) (analyzerDebugger.getStepIntoOver()*1.0/debugTimes*1.0);
+			debugStepSP = (float) (analyzerDebugger.getStepIntoSpecific()*1.0/debugTimes*1.0);
+			debugMonitor = (float) (analyzerDebugger.getMonitors()*1.0/debugTimes*1.0);
+			debugStepOUT = (float) (analyzerDebugger.getStepOut()*1.0/debugTimes*1.0);
+			debugRunCursor = (float) (analyzerDebugger.getRuntoCursor()*1.0/debugTimes*1.0);
+			debugAddWatch = (float) (analyzerDebugger.getAddWatch()*1.0/debugTimes*1.0);
+			
+			debugEditing = (float) (analyzerDebugger.getEditing()*1.0/debugTimes*1.0);
+			debugBreakCondition = (float) (analyzerDebugger.getBreakCondition()*1.0/debugTimes*1.0);
+			debugExeChanged = (float) (analyzerDebugger.getExecutionChanged()*1.0/debugTimes*1.0);
+			debugOutScope = (float) (analyzerDebugger.getOutScope()*1.0/debugTimes*1.0);
+			debugBreakException = (float) (analyzerDebugger.getBreakException()*1.0/debugTimes*1.0);
+			debugMultiThread = (float) (analyzerDebugger.getMultiThread()*1.0/debugTimes*1.0);
+			debugNextStatement = (float) (analyzerDebugger.getSetNextStatement()*1.0/debugTimes*1.0);
+		}else{
+			debugBreakpoint = analyzerDebugger.getBreakpoint();
+			debugRestart = analyzerDebugger.getRestart();
+			debugStepIO = analyzerDebugger.getStepIntoOver();
+			debugStepSP = analyzerDebugger.getStepIntoSpecific();
+			debugMonitor = analyzerDebugger.getMonitors();
+			debugStepOUT = analyzerDebugger.getStepOut();
+			debugRunCursor = analyzerDebugger.getRuntoCursor();
+			debugAddWatch = analyzerDebugger.getAddWatch();
+			
+			debugEditing = analyzerDebugger.getEditing();
+			debugBreakCondition = analyzerDebugger.getBreakCondition();
+			debugExeChanged = analyzerDebugger.getExecutionChanged();
+			debugOutScope = analyzerDebugger.getOutScope();
+			debugBreakException = analyzerDebugger.getBreakException();
+			debugMultiThread = analyzerDebugger.getMultiThread();
+			debugNextStatement = analyzerDebugger.getSetNextStatement();
+		}
 		
 		this.attributes = new float[]{debugBreakpoint, debugRestart, debugStepIO, debugStepSP, 
 				debugMonitor, debugStepOUT, debugRunCursor, debugAddWatch,
