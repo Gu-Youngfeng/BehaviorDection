@@ -80,9 +80,10 @@ public class Launcher {
 		 * STEP 1 & 2
 		 */
 
-		DoWorks(userProfile, "Positive"); // to get rid of the risk of memory leak.
-		DoWorks(userProfile, "Negative");
-		DoWorks(userProfile, "Neutral");
+		DoWorks(userProfile, "[C#]:Positive"); // to get rid of the risk of memory leak.
+		DoWorks(userProfile, "[C#]:Negative");
+		DoWorks(userProfile, "[C#]:Neutral");
+		DoWorks(userProfile, "[C#]:Unknown");
 //		System.out.println("[Day]" + Collector.getDevelopDays("E:/workspaceee/BehaviorDection/src/main/resources/total/2016-09-28-11.zip.txt"));
 	}
 	

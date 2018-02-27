@@ -14,25 +14,25 @@ USER:2016-05-12\0.zip [Position]:Student [C#]:Positive1
 USER:2016-05-13\10.zip [Position]:SoftwareEngineer [C#]:Positive1
 USER:2016-05-13\100.zip [Position]:ResearcherAcademic [C#]:Positive3
 USER:2016-05-17\1.zip [Position]:HobbyProgrammer [C#]:Positive2
-USER:2016-05-18\0.zip
+USER:2016-05-18\0.zip [Position]:Unknown [C#]:Unknown
 USER:2016-05-18\10.zip [Position]:SoftwareEngineer [C#]:Negative3
 USER:2016-05-19\0.zip [Position]:HobbyProgrammer [C#]:Positive1
 USER:2016-05-31\0.zip [Position]:SoftwareEngineer [C#]:Positive1
-USER:2016-06-04\26.zip
+USER:2016-06-04\26.zip [Position]:Unknown [C#]:Unknown
 USER:2016-06-06\0.zip [Position]:SoftwareEngineer [C#]:Positive3
-USER:2016-06-07\0.zip
+USER:2016-06-07\0.zip [Position]:Unknown [C#]:Unknown
 USER:2016-06-08\1.zip [Position]:SoftwareEngineer [C#]:Positive1
 USER:2016-06-08\11.zip [Position]:SoftwareEngineer [C#]:Positive3
-USER:2016-06-10\10.zip
+USER:2016-06-10\10.zip [Position]:Unknown [C#]:Unknown
 USER:2016-06-14\10.zip [Position]:HobbyProgrammer [C#]:Positive1
 USER:2016-06-16\1.zip [Position]:Unknown [C#]:Positive3
 USER:2016-06-16\48.zip [Position]:SoftwareEngineer [C#]:Positive2
 USER:2016-06-20\0.zip [Position]:SoftwareEngineer [C#]:Positive3
-USER:2016-06-29\0.zip
+USER:2016-06-29\0.zip [Position]:Unknown [C#]:Unknown
 USER:2016-07-01\10.zip [Position]:SoftwareEngineer [C#]:Positive2
 USER:2016-07-12\0.zip [Position]:SoftwareEngineer [C#]:Negative1
-USER:2016-07-19\0.zip
-USER:2016-07-28\10.zip
+USER:2016-07-19\0.zip [Position]:Unknown [C#]:Unknown
+USER:2016-07-28\10.zip [Position]:Unknown [C#]:Unknown
 USER:2016-07-29\0.zip [Position]:SoftwareEngineer [C#]:Positive2
 USER:2016-08-02\0.zip [Position]:SoftwareEngineer [C#]:Positive3
 USER:2016-08-03\25.zip [Position]:SoftwareEngineer [C#]:Positive3
@@ -41,23 +41,23 @@ USER:2016-08-09\2.zip [Position]:Student [C#]:Negative1
 USER:2016-08-10\1.zip [Position]:SoftwareEngineer [C#]:Positive1
 USER:2016-08-13\0.zip [Position]:SoftwareEngineer [C#]:Positive3
 USER:2016-08-18\159.zip [Position]:SoftwareEngineer [C#]:Positive2
-USER:2016-08-19\0.zip
+USER:2016-08-19\0.zip [Position]:Unknown [C#]:Unknown
 USER:2016-08-22\0.zip [Position]:SoftwareEngineer [C#]:Positive2
 USER:2016-08-25\0.zip [Position]:Unknown [C#]:Positive1
 USER:2016-08-31\101.zip [Position]:HobbyProgrammer [C#]:Positive1
 USER:2016-09-13\2.zip [Position]:Unknown [C#]:Positive2
 USER:2016-09-21\10.zip [Position]:SoftwareEngineer [C#]:Positive2
 USER:2016-09-21\7.zip [Position]:SoftwareEngineer [C#]:Positive2
-USER:2016-09-26\10.zip
-USER:2016-09-26\100.zip
+USER:2016-09-26\10.zip [Position]:Unknown [C#]:Unknown
+USER:2016-09-26\100.zip [Position]:Unknown [C#]:Unknown
 USER:2016-09-26\207.zip [Position]:SoftwareEngineer [C#]:Positive2
 USER:2016-09-28\11.zip [Position]:SoftwareEngineer [C#]:Positive2
 USER:2016-09-29\28.zip [Position]:SoftwareEngineer [C#]:Positive2
-USER:2016-10-04\1.zip
+USER:2016-10-04\1.zip [Position]:Unknown [C#]:Unknown
 USER:2016-10-04\96.zip [Position]:Student [C#]:Negative1
 USER:2016-10-07\0.zip [Position]:SoftwareEngineer [C#]:Negative1
-USER:2016-10-12\23.zip
-USER:2016-10-28\0.zip
+USER:2016-10-12\23.zip [Position]:Unknown [C#]:Unknown
+USER:2016-10-28\0.zip [Position]:Unknown [C#]:Unknown
 USER:2016-10-30\14.zip [Position]:SoftwareEngineer [C#]:Positive2
 USER:2016-11-02\19.zip [Position]:SoftwareEngineer [C#]:Positive3
 USER:2016-11-16\11.zip [Position]:ResearcherIndustry [C#]:Negative1
@@ -71,17 +71,17 @@ USER:2016-12-19\13.zip [Position]:SoftwareEngineer [C#]:Positive3
 USER:2016-12-21\1.zip [Position]:SoftwareEngineer [C#]:Positive2
 USER:2016-12-23\0.zip [Position]:Student [C#]:Negative2
 USER:2016-12-24\10.zip [Position]:Unknown [C#]:Positive3
-USER:2016-12-26\0.zip
+USER:2016-12-26\0.zip [Position]:Unknown [C#]:Unknown
 USER:2017-01-04\0.zip [Position]:SoftwareEngineer [C#]:Positive1
 USER:2017-01-04\114.zip [Position]:SoftwareEngineer [C#]:Positive1
 USER:2017-01-10\1.zip [Position]:SoftwareEngineer [C#]:Positive2
 USER:2017-01-16\0.zip [Position]:SoftwareEngineer [C#]:Positive3
 USER:2017-01-27\0.zip [Position]:Unknown [C#]:Positive2
 USER:2017-01-31\1001.zip [Position]:SoftwareEngineer [C#]:Positive3
-USER:2017-02-01\1.zip
-USER:2017-02-24\0.zip
+USER:2017-02-01\1.zip [Position]:Unknown [C#]:Unknown
+USER:2017-02-24\0.zip [Position]:Unknown [C#]:Unknown
 USER:earlier\data\1000-1099\1020.zip [Position]:Student [C#]:Neutral
 USER:earlier\data\1000-1099\1022.zip [Position]:SoftwareEngineer [C#]:Positive1
 USER:earlier\data\1100-1199\1161.zip [Position]:SoftwareEngineer [C#]:Negative1
-USER:earlier\data\1100-1199\1179.zip
+USER:earlier\data\1100-1199\1179.zip [Position]:Unknown [C#]:Unknown
 USER:earlier\data\1200-1299\1274.zip [Position]:HobbyProgrammer [C#]:Positive1
